@@ -1,13 +1,18 @@
 package org.example.oblig3;
 
 public class Billett {
+    private int id;
     private String fornavn;
     private String etternavn;
     private String filmer;
     private String antall;
     private String nummer;
     private String epost;
-    public Billett(String filmer, String antall, String fornavn, String etternavn, String nummer, String epost){
+
+
+
+    public Billett(int id, String filmer, String antall, String fornavn, String etternavn, String nummer, String epost){
+        this.id = id;
         this.fornavn = fornavn;
         this.etternavn=etternavn;
         this.filmer=filmer;
@@ -64,6 +69,13 @@ public class Billett {
 
     public void setEpost(String epost) {
         this.epost = epost;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 

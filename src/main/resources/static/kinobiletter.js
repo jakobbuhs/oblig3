@@ -1,7 +1,7 @@
 let liste = [];
-$(function(){  // kjøres når dokumentet er ferdig lastet
-    hentAlle();
-});
+$(document).ready(function (){
+    hentAlleBilletter();
+})
 function valideringEpost() {
     let epost = $("#epost").val();
     if(epost===""){
@@ -82,28 +82,48 @@ function billettKjop(){
             epost: $("#epost").val()
         };
 
-        $.post("/lagre", billettData, function(){
-            hentAlle();
+        fetch('/lagre', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(billettData)
         });
+        hentAlleBilletter();
     }
 }
-function hentAlle() {
+function hentAlleBilletter() {
     $.get("/hentAlle", function (data) {
         console.log(data)
         Ut(data);
     });
 }
 function Ut(billetter){
-    let ut = "";
-    for (let i in billetter) {
-        ut += billetter[i].fornavn + " " + billetter[i].etternavn + " Skal se: " + billetter[i].filmer + " og er totalt " + billetter[i].antall + " personer,";
-        ut += " Kontakt info: epost: " + billetter[i].epost + " tlf: " + billetter[i].nummer + "</br>";
-    }
+    let ut = "<table class='table table-striped'><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Nummer</th><th>Epost</th><th></th><th></th></tr>";
+    billetter.forEach(billett => {
+        ut += `<tr>
+          <td>${billett.filmer}</td>
+          <td>${billett.antall}</td>
+          <td>${billett.fornavn}</td>
+          <td>${billett.etternavn}</td>
+          <td>${billett.nummer}</td>
+          <td>${billett.epost}</td>
+          <td><a class='btn btn-primary' href='endre.html?id=${billett.id}'>Endre</a></td>
+          <td><button class='btn btn-danger' onclick='slettEn(${billett.id})'>Slett</button></td>
+      </tr>`;
+    });
+    ut +="<table>";
     $("#billetterUt").html(ut);
 }
 
-function slettBilletter(){
-    $.get( "/slettAlle", function() {
-        hentAlle();
+function slettBilletter() {
+    $.get("/slettAlle", function() {
+        hentAlleBilletter();
+    });
+}
+function slettEn(id) {
+    const url = "/slettEn?id="+id;
+    $.get( url, function() {
+        window.location.href = 'kinobiletter.html';
     });
 }

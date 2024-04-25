@@ -13,19 +13,36 @@ public class BillettRepository {
     private JdbcTemplate db;
 
     public void lagreBillett(Billett innBillett){
-        String sql = "INSERT INTO Billett(fornavn, etternavn, filmer, antall, nummer, epost) VALUES(?,?,?,?,?,?)";
-        db.update(sql,innBillett.getFornavn(),innBillett.getEtternavn(),innBillett.getFilmer(),innBillett.getAntall(),
+        String sql = "INSERT INTO Billett(filmer, antall, fornavn, etternavn, nummer, epost) VALUES(?,?,?,?,?,?)";
+        db.update(sql,innBillett.getFilmer(), innBillett.getAntall(),innBillett.getFornavn(),innBillett.getEtternavn(),
                 innBillett.getNummer(),innBillett.getEpost());
 
     }
     public List<Billett> hentAlleBilletter(){
-        String sql = "SELECT * FROM Billett";
+        String sql = "SELECT * FROM Billett ORDER BY etternavn";
         List<Billett> alleKunder = db.query(sql,new BeanPropertyRowMapper(Billett.class));
         return alleKunder;
     }
 
-    public void slettAlleBilletter(){
-        String sql = "DELETE FROM Billeter";
+    public void slettBilletter(){
+        String sql = "DELETE FROM Billett";
         db.update(sql);
+    }
+    public Billett hentEn(int id) {
+
+        String sql = "SELECT * FROM Billett WHERE id=?";
+        Billett billett = db.queryForObject(sql, BeanPropertyRowMapper.newInstance(Billett.class), id);
+        return billett;
+    }
+
+    public void endreEn(Billett billett){
+        String sql = "UPDATE Billett SET filmer=?, antall=?, fornavn=?,etternavn=?, nummer=?, epost=? where id=?";
+        db.update(sql, billett.getFilmer(), billett.getAntall(), billett.getFornavn(), billett.getEtternavn(),
+                billett.getNummer(), billett.getEpost(), billett.getId());
+    }
+
+    public void slettEn(int id) {
+        String sql = "DELETE FROM Billett WHERE id=?";
+        db.update(sql,id);
     }
 }
