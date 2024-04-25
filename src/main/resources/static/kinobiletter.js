@@ -1,6 +1,6 @@
 let liste = [];
 $(document).ready(function (){
-    hentAlleBilletter();
+
 })
 function valideringEpost() {
     let epost = $("#epost").val();
@@ -91,7 +91,10 @@ function billettKjop(){
         });
 
     }
-    hentAlleBilletter();
+    setTimeout(function(){
+        hentAlleBilletter()
+    }, 3000);
+
 }
 function hentAlleBilletter() {
     $.get("/hentAlle", function (data) {
