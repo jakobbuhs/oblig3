@@ -89,8 +89,9 @@ function billettKjop(){
             },
             body: JSON.stringify(billettData)
         });
-        hentAlleBilletter();
+
     }
+    hentAlleBilletter();
 }
 function hentAlleBilletter() {
     $.get("/hentAlle", function (data) {
