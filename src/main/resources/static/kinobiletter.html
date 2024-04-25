@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="kinobiletter.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Bestilling av kinobiletter</h1>
+<table class="table">
+    <tr><td><label for="filmer">Velg film:</label></td>
+    <td><select id="filmer">
+        <option>Løvenes konge</option>
+        <option>Snøhvit</option>
+        <option>Spectre</option>
+    </select></tr>
+    <tr><td><label for="antall">Antall biletter:</label></td>
+    <td><input type="number" min="1" max="10" id="antall" onchange="valideringBillett()"></td>
+    <td id="feilmeldingAntall"></td></tr>
+    <tr><td><label for="fornavn">Fornavn:</label></td>
+    <td><input type="text" id="fornavn" onchange="valideringFornavn()"></td>
+    <td id="feilmeldingFornavn"></td></tr>
+    <tr><td><label for="etternavn">Etternavn:</label></td>
+        <td><input type="text" id="etternavn" onchange="valideringEtternavn()"></td>
+    <td id="feilmeldingEtternavn"></td></tr>
+    <tr><td><label for="nummer">Telefonnummer:</label></td>
+        <td><input type="number" min="10000000" max="99999999" id="nummer" onchange="valideringNummer()"></td>
+        <td id="feilmeldingNummer"></td></tr>
+    <tr><td><label for="epost">Epost:</label></td>
+        <td><input type="email" id="epost" onchange="valideringEpost()"></td>
+        <td id="feilmeldingEpost"></td></tr>
+    <tr><td><button class="btn btn-primary" onclick="billettKjop(); valideringFornavn(); valideringBillett();valideringEtternavn(); valideringEpost(); valideringNummer()">Kjøp billett</button></td></tr>
+</table>
+
+<h2>Alle billetter</h2>
+<div id="billetterUt"></div>
+<button class="btn btn-danger" onclick="slettBilletter()">Slett billeter</button>
+<div id="personRegister"></div>
+</body>
+</html>
